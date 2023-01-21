@@ -3,8 +3,8 @@ import { View, Text, ScrollView, Alert } from 'react-native';
 import { Header } from '../components/Header';
 import { HabitDay, DAY_SYZE } from '../components/HabitDay';
 import { generateDatesFromYearBeginning } from '../utils/generate-dates-from-year-beginning';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { api } from '../lib/axios';
 import { Loading } from '../components/Loading';
 import dayjs from 'dayjs';
@@ -42,7 +42,6 @@ export function Home() {
       const res = await api.get<Summary>('/summary')
 
       setSummary(res.data)
-      console.log(res.data)
     } catch (error) {
       Alert.alert('Ops', 'Nao foi possivel carregar os dados')
       console.log(error)
@@ -51,9 +50,9 @@ export function Home() {
     }
   }
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     fetchData()
-  }, [])
+  }, []))
 
   if (loading) return <Loading />
   
