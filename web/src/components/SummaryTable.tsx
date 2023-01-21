@@ -27,9 +27,9 @@ type Summary = {
 
 export function SummaryTable() {
   const [summary, setSummary] = useState<Summary>([])
+
   useEffect(() => {
     api.get<Summary>('summary').then(res => setSummary(res.data))
-    console.log(summary)
   }, [])
   
   return (
@@ -50,7 +50,7 @@ export function SummaryTable() {
             <HabitDay
               key={date.toString()}
               amount={dayInSummary?.amount}
-              completed={dayInSummary?.completed}
+              defaultCompleted={dayInSummary?.completed}
               date={date}
             />
           )
